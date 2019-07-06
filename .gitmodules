@@ -1,0 +1,3 @@
+[submodule "src/flightplan"]
+	path = src/flightplan
+	url = https://github.com/p2bauer/flightplan.git

@@ -1,0 +1,12 @@
+{
+  "scriptFile": "index.js",
+  "bindings": [
+    {
+      "name": "mySbMsg",
+      "type": "serviceBusTrigger",
+      "direction": "in",
+      "queueName": "test1",
+      "connection": "testConnection"
+    }
+  ]
+}
