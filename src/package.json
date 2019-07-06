@@ -1,9 +1,9 @@
 {
   "name": "flightplanfunctions",
-  "version": "1.0",
   "description": "Azure functions to find availability headless in the cloud",
   "scripts": {
-    "test": "echo \"No tests yet...\""
+    "test": "echo \"No tests yet...\"",
+    "postinstall": "cd flightplan && git submodule init && npm install"
   },
   "author": ""
 }

@@ -1,6 +1,6 @@
-const fp = require('../../src');
-const db = require('../../shared/db');
-const logger = require('../../shared/logger');
+const fp = require('../flightplan/src');
+const db = require('../flightplan/shared/db');
+const logger = require('../flightplan/shared/logger');
 
 module.exports = async function(context, mySbMsg) {
     context.log('JavaScript ServiceBus queue trigger function processed message', mySbMsg);
