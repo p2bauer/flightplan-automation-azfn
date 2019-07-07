@@ -18,14 +18,15 @@ module.exports = async function (context, req) {
 
     var jsonStr = "{ " + 
                         "website: '" + website + "'" + 
-                        ", includePartners: " + includePartners + 
-                        ", fromCity: '" + fromCity + "'" +
-                        ", toCity: '" + toCity + "'" + 
-                        ", oneWay: " + oneWay + 
+                        ", partners: " + includePartners + 
+                        ", from: '" + fromCity + "'" +
+                        ", to: '" + toCity + "'" + 
+                        ", oneway: " + oneWay + 
                         ", cabin: '" + cabin + "'" + 
                         ", start: '" + start + "'" + 
                         ", end: '" + end + "'" + 
                         ", quantity: " + quantity + 
+                        ", reverse: false" + 
                  " }";
 
     // TODO: fill up the SB queue msg with all the stuff from the HTTP post (req)

@@ -1,4 +1,4 @@
-//const cliSearch = require('../flightplan/bin/cli-search');
+const cliSearch = require('../flightplan/shared/search');
 
 module.exports = async function(context, mySbMsg) {
     context.log('JavaScript ServiceBus queue trigger function processed message', mySbMsg);
@@ -12,7 +12,15 @@ module.exports = async function(context, mySbMsg) {
     //     console.error(err);
     // }
 
-    //await cliSearch.main(mySbMsg);
+    //headless, proxy, docker 
+
+    mySbMsg.headless = true;
+    mySbMsg.proxy = "";
+    mySbMsg.docker = false;
+
+    var credentialsOverride = process.env.ACCOUNTS;
+
+    await cliSearch.doSearch(mySbMsg, credentialsOverride);
 
 
 
