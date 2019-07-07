@@ -5,7 +5,7 @@ module.exports = async function(context, mySbMsg) {
 
     mySbMsg.headless = true;
     mySbMsg.proxy = "";
-    mySbMsg.docker = false;
+    mySbMsg.docker = true;
 
     var credentialsOverride = process.env.ACCOUNTS;
 
