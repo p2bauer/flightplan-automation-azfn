@@ -24,8 +24,7 @@ function formatDate(date) {
 }
 
 module.exports = async function (context, req) {
-    context.log('JavaScript HTTP trigger function processed a request.');
-
+    
     var website = req.query.website || "AC";
     var includePartners = req.query.includePartners || true;
     var fromCity = req.query.fromCity || "";
@@ -36,10 +35,8 @@ module.exports = async function (context, req) {
     var end = req.query.end || "2020-07-01";
     var quantity = req.query.quantity || 2;
 
-    context.res = {
-        // status: 200, /* Defaults to 200 */
-        body: "Searching for " + fromCity + " to " + toCity + " from " + start + " to " + end + " for " + quantity + " person(s)"
-    };
+    const statusStr = "Searching for " + fromCity + " to " + toCity + " from " + start + " to " + end + " for " + quantity + " person(s)";
+    context.log(statusStr);
 
     // because functions can only run for 10 minutes (and I don't really want to get into durable functions/chaining/etc), split this request up by date.
     const startDate = Date.parse(start);
@@ -70,7 +67,7 @@ module.exports = async function (context, req) {
         //currentEndStr = currentEndStr.replace(/\//g, "-");
         const currentEndStr = formatDate(currentEnd);
 
-        context.bindings.outputSbQueue.push({
+        const itemToPush = {
             website: website, 
             partners: includePartners, 
             from: fromCity, 
@@ -81,6 +78,14 @@ module.exports = async function (context, req) {
             end: currentEndStr, 
             quantity: quantity, 
             reverse: false
-        });
+        };
+
+        context.log('Enqueuing item to the service bus queue for processing', itemToPush);
+        context.bindings.outputSbQueue.push(itemToPush);
     }
+
+    context.res = {
+        // status: 200, /* Defaults to 200 */
+        body: statusStr
+    };
 };
