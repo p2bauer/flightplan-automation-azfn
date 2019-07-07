@@ -5,9 +5,22 @@ function date_diff_indays(date1, date2) {
 }
 
 function AddDaysToDate(thisDate, days) {
-    var date = new Date(thisDate.valueOf());
+    const thisDateVal = thisDate.valueOf();
+    var date = new Date(thisDateVal); //Date.UTC(thisDateVal);
     date.setDate(date.getDate() + days);
     return date;
+}
+
+function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
 }
 
 module.exports = async function (context, req) {
@@ -36,7 +49,9 @@ module.exports = async function (context, req) {
 
     context.bindings.outputSbQueue = [];
     const incrementBy = 5;
-    for (var i=0; i<numDays; i+=incrementBy) {
+
+    // inclusive
+    for (var i=0; i<=numDays; i+=incrementBy) {
 
         const currentStart = AddDaysToDate(startDate, i);
         const currentEnd = AddDaysToDate(startDate, i + incrementBy - 1);
@@ -45,13 +60,15 @@ module.exports = async function (context, req) {
 
         //const currentStartStr = currentStart.getUTCFullYear() + "-" + currentStart.getUTCMonth() + "-" + currentStart.getUTCDate();
         //var currentStartUtc = Date.UTC(currentStart.getUTCFullYear(), currentStart.getUTCMonth(), currentStart.getUTCDate());
-        var currentStartStr = currentStart.toLocaleDateString();
-        currentStartStr = currentStartStr.replace(/\//g, "-");
+        //var currentStartStr = currentStart.toLocaleDateString();
+        //currentStartStr = currentStartStr.replace(/\//g, "-");
+        const currentStartStr = formatDate(currentStart);
 
         //const currentEndStr = currentEnd.getUTCFullYear() + "-" + currentEnd.getUTCMonth() + "-" + currentEnd.getUTCDate();
         //var currentEndUtc = Date.UTC(currentEnd.getUTCFullYear(), currentEnd.getUTCMonth(), currentEnd.getUTCDate());
-        var currentEndStr = currentEnd.toLocaleDateString();
-        currentEndStr = currentEndStr.replace(/\//g, "-");
+        //var currentEndStr = currentEnd.toLocaleDateString();
+        //currentEndStr = currentEndStr.replace(/\//g, "-");
+        const currentEndStr = formatDate(currentEnd);
 
         context.bindings.outputSbQueue.push({
             website: website, 
