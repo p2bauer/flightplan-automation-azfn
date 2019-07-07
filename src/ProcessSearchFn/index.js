@@ -6,6 +6,7 @@ module.exports = async function(context, mySbMsg) {
     mySbMsg.headless = true;
     mySbMsg.proxy = "";
     mySbMsg.docker = true;
+    mySbMsg.remotechrome = process.env.REMOTECHROME;
 
     var credentialsOverride = process.env.ACCOUNTS;
 
