@@ -1,21 +1,35 @@
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
 
-    if (req.query.name || (req.body && req.body.name)) {
-        context.res = {
-            // status: 200, /* Defaults to 200 */
-            body: "Hello " + (req.query.name || req.body.name)
-        };
+    var website = req.query.website || "AC";
+    var includePartners = req.query.includePartners || true;
+    var fromCity = req.query.fromCity || "";
+    var toCity = req.query.toCity || "";
+    var oneWay = req.query.oneWay || false;
+    var cabin = req.query.cabin || "business";
+    var start = req.query.start || "2020-01-01";
+    var end = req.query.end || "2020-07-01";
+    var quantity = req.query.quantity || 2;
 
-        // TODO: fill up the SB queue msg with all the stuff from the HTTP post (req)
-        // NOTE: looks like so far JS only supports setting the message itself (no metadata?)
-        //   https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-service-bus#output---javascript-example
-        context.bindings.outputSbQueue = (req.query.name || req.body.name);
-    }
-    else {
-        context.res = {
-            status: 400,
-            body: "Please pass a name on the query string or in the request body"
-        };
-    }
+    context.res = {
+        // status: 200, /* Defaults to 200 */
+        body: "Searching for " + fromCity + " to " + toCity
+    };
+
+    var jsonStr = "{ " + 
+                        "website: '" + website + "'" + 
+                        ", includePartners: " + includePartners + 
+                        ", fromCity: '" + fromCity + "'" +
+                        ", toCity: '" + toCity + "'" + 
+                        ", oneWay: " + oneWay + 
+                        ", cabin: '" + cabin + "'" + 
+                        ", start: '" + start + "'" + 
+                        ", end: '" + end + "'" + 
+                        ", quantity: " + quantity + 
+                 " }";
+
+    // TODO: fill up the SB queue msg with all the stuff from the HTTP post (req)
+    // NOTE: looks like so far JS only supports setting the message itself (no metadata?)
+    //   https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-service-bus#output---javascript-example
+    context.bindings.outputSbQueue = jsonStr;
 };
