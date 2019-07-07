@@ -3,7 +3,7 @@
   "description": "Azure functions to find availability headless in the cloud",
   "scripts": {
     "test": "echo \"No tests yet...\"",
-    "postinstall": "cd flightplan && git submodule init && npm install"
+    "postinstall": "cd flightplan && npm install"
   },
   "author": ""
 }
