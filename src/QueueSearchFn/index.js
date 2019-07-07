@@ -53,19 +53,17 @@ module.exports = async function (context, req) {
         var currentEndStr = currentEnd.toLocaleDateString();
         currentEndStr = currentEndStr.replace(/\//g, "-");
 
-        const jsonStr = "{ " + 
-            "website: '" + website + "'" + 
-            ", partners: " + includePartners + 
-            ", from: '" + fromCity + "'" +
-            ", to: '" + toCity + "'" + 
-            ", oneway: " + oneWay + 
-            ", cabin: '" + cabin + "'" + 
-            ", start: '" + currentStartStr + "'" + 
-            ", end: '" + currentEndStr + "'" + 
-            ", quantity: " + quantity + 
-            ", reverse: false" + 
-        " }";
-
-        context.bindings.outputSbQueue.push(jsonStr);
+        context.bindings.outputSbQueue.push({
+            website: website, 
+            partners: includePartners, 
+            from: fromCity, 
+            to: toCity, 
+            oneway: oneWay, 
+            cabin: cabin, 
+            start: currentStartStr, 
+            end: currentEndStr, 
+            quantity: quantity, 
+            reverse: false
+        });
     }
 };
