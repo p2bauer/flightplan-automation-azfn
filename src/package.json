@@ -2,8 +2,11 @@
   "name": "flightplanfunctions",
   "description": "Azure functions to find availability headless in the cloud",
   "scripts": {
-    "test": "echo \"No tests yet...\"",
+    "test": "jest",
     "postinstall": "cd flightplan && npm install"
+  },
+  "devDependencies": {
+    "jest": "^24.8.0"
   },
   "author": ""
 }
