@@ -1,3 +1,15 @@
+function date_diff_indays(date1, date2) {
+    dt1 = new Date(date1);
+    dt2 = new Date(date2);
+    return Math.floor((Date.UTC(dt2.getFullYear(), dt2.getMonth(), dt2.getDate()) - Date.UTC(dt1.getFullYear(), dt1.getMonth(), dt1.getDate()) ) /(1000 * 60 * 60 * 24));
+}
+
+function AddDaysToDate(thisDate, days) {
+    var date = new Date(thisDate.valueOf());
+    date.setDate(date.getDate() + days);
+    return date;
+}
+
 module.exports = async function (context, req) {
     context.log('JavaScript HTTP trigger function processed a request.');
 
@@ -13,24 +25,47 @@ module.exports = async function (context, req) {
 
     context.res = {
         // status: 200, /* Defaults to 200 */
-        body: "Searching for " + fromCity + " to " + toCity
+        body: "Searching for " + fromCity + " to " + toCity + " from " + start + " to " + end + " for " + quantity + " person(s)"
     };
 
-    var jsonStr = "{ " + 
-                        "website: '" + website + "'" + 
-                        ", partners: " + includePartners + 
-                        ", from: '" + fromCity + "'" +
-                        ", to: '" + toCity + "'" + 
-                        ", oneway: " + oneWay + 
-                        ", cabin: '" + cabin + "'" + 
-                        ", start: '" + start + "'" + 
-                        ", end: '" + end + "'" + 
-                        ", quantity: " + quantity + 
-                        ", reverse: false" + 
-                 " }";
+    // because functions can only run for 10 minutes (and I don't really want to get into durable functions/chaining/etc), split this request up by date.
+    const startDate = Date.parse(start);
+    const endDate = Date.parse(end);
 
-    // TODO: fill up the SB queue msg with all the stuff from the HTTP post (req)
-    // NOTE: looks like so far JS only supports setting the message itself (no metadata?)
-    //   https://docs.microsoft.com/en-us/azure/azure-functions/functions-bindings-service-bus#output---javascript-example
-    context.bindings.outputSbQueue = jsonStr;
+    const numDays = date_diff_indays(startDate, endDate);
+
+    context.bindings.outputSbQueue = [];
+    const incrementBy = 5;
+    for (var i=0; i<numDays; i+=incrementBy) {
+
+        const currentStart = AddDaysToDate(startDate, i);
+        const currentEnd = AddDaysToDate(startDate, i + incrementBy - 1);
+
+        // TODO: figure out where I'm accidentally setting to local instead of UTC!!!
+
+        //const currentStartStr = currentStart.getUTCFullYear() + "-" + currentStart.getUTCMonth() + "-" + currentStart.getUTCDate();
+        //var currentStartUtc = Date.UTC(currentStart.getUTCFullYear(), currentStart.getUTCMonth(), currentStart.getUTCDate());
+        var currentStartStr = currentStart.toLocaleDateString();
+        currentStartStr = currentStartStr.replace(/\//g, "-");
+
+        //const currentEndStr = currentEnd.getUTCFullYear() + "-" + currentEnd.getUTCMonth() + "-" + currentEnd.getUTCDate();
+        //var currentEndUtc = Date.UTC(currentEnd.getUTCFullYear(), currentEnd.getUTCMonth(), currentEnd.getUTCDate());
+        var currentEndStr = currentEnd.toLocaleDateString();
+        currentEndStr = currentEndStr.replace(/\//g, "-");
+
+        const jsonStr = "{ " + 
+            "website: '" + website + "'" + 
+            ", partners: " + includePartners + 
+            ", from: '" + fromCity + "'" +
+            ", to: '" + toCity + "'" + 
+            ", oneway: " + oneWay + 
+            ", cabin: '" + cabin + "'" + 
+            ", start: '" + currentStartStr + "'" + 
+            ", end: '" + currentEndStr + "'" + 
+            ", quantity: " + quantity + 
+            ", reverse: false" + 
+        " }";
+
+        context.bindings.outputSbQueue.push(jsonStr);
+    }
 };
