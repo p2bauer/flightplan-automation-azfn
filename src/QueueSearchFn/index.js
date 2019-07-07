@@ -1,5 +1,5 @@
 module.exports = async function (context, req) {
-    context.log.info('JavaScript HTTP trigger function processed a request.');
+    context.log('JavaScript HTTP trigger function processed a request.');
 
     var website = req.query.website || "AC";
     var includePartners = req.query.includePartners || true;
