@@ -19,8 +19,8 @@ module.exports = async function (context, req) {
     var jsonStr = "{ " + 
                         "website: '" + website + "'" + 
                         ", partners: " + includePartners + 
-                        ", from: '" + fromCity.toUpperCase() + "'" +
-                        ", to: '" + toCity.toUpperCase() + "'" + 
+                        ", from: '" + fromCity + "'" +
+                        ", to: '" + toCity + "'" + 
                         ", oneway: " + oneWay + 
                         ", cabin: '" + cabin + "'" + 
                         ", start: '" + start + "'" + 
