@@ -14,7 +14,9 @@
             "name": "Jest Tests",
             "program": "${workspaceRoot}/src/node_modules/jest/bin/jest.js",
             "args": [
-                "-i"
+                "-i", 
+                "${workspaceRoot}/src/QueueSearchFn/index.test.js", 
+                "${workspaceRoot}/src/ProcessSearchFn/index.test.js"
             ],
             "cwd": "${workspaceRoot}/src", 
             "internalConsoleOptions": "openOnSessionStart"
