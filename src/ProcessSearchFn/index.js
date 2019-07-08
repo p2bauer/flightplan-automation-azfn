@@ -7,11 +7,10 @@ module.exports = async function(context, mySbMsg) {
     mySbMsg.proxy = "";
     mySbMsg.docker = true;
     mySbMsg.remotechrome = process.env.REMOTECHROME;
-
-    var credentialsOverride = process.env.ACCOUNTS;
+    mySbMsg.credentials = process.env.ACCOUNTS;
 
     try {
-        await cliSearch.doSearch(mySbMsg, credentialsOverride, false);
+        await cliSearch.doSearch(mySbMsg, false);
     } catch (err) {
         context.log('ERROR', err);
         throw err;
