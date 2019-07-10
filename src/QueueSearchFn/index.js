@@ -34,6 +34,7 @@ module.exports = async function (context, req) {
     var start = req.query.start || "2020-01-01";
     var end = req.query.end || "2020-02-01";
     var quantity = req.query.quantity || 2;
+    var daysToSearchPerRun = req.query.searchdays || 5; // this is because searches are slow, and azfns time out in 10 minutes
 
     const statusStr = "Searching for " + fromCity + " to " + toCity + " from " + start + " to " + end + " for " + quantity + " person(s)";
     context.log(statusStr);
@@ -45,13 +46,15 @@ module.exports = async function (context, req) {
     const numDays = date_diff_indays(startDate, endDate);
 
     context.bindings.outputSbQueue = [];
-    const incrementBy = 5;
 
     // inclusive
-    for (var i=0; i<=numDays; i+=incrementBy) {
+    for (var i=0; i<=numDays; i+=daysToSearchPerRun) {
 
-        const currentStart = AddDaysToDate(startDate, i);
-        const currentEnd = AddDaysToDate(startDate, i + incrementBy - 1);
+        var currentStart = AddDaysToDate(startDate, i);
+        var currentEnd = AddDaysToDate(startDate, i + daysToSearchPerRun - 1);
+        if (currentEnd > endDate) {
+            currentEnd = endDate;
+        }
 
         // TODO: figure out where I'm accidentally setting to local instead of UTC!!!
 
