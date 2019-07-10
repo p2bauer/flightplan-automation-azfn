@@ -9,8 +9,12 @@ module.exports = async function(context, mySbMsg) {
     mySbMsg.remotechrome = process.env.REMOTECHROME;
     mySbMsg.credentials = process.env.ACCOUNTS;
 
+    const customLogger = (str) => {
+        context.log(str);
+    };
+
     try {
-        await cliSearch.doSearch(mySbMsg, false);
+        await cliSearch.doSearch(mySbMsg, false, customLogger);
     } catch (err) {
         context.log('ERROR', err);
         throw err;

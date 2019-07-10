@@ -20,9 +20,6 @@ test('Request should be successfully be queued up', async () => {
 
     await queueSearchFunction(context, request);
 
-    // TODO: don't test logs, test something more useful!
-    expect(context.log.mock.calls.length).toBe(2);
-
     expect(context.res.body).toEqual('Searching for ' + request.query.fromCity + ' to ' + request.query.toCity + 
         ' from ' + request.query.start + ' to ' + request.query.end + ' for ' + request.query.quantity + ' person(s)');
 
