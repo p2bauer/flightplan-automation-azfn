@@ -15,8 +15,8 @@
             "program": "${workspaceRoot}/src/node_modules/jest/bin/jest.js",
             "args": [
                 "-i", 
-                "${workspaceRoot}/src/QueueSearchFn/index.test.js", 
-                "${workspaceRoot}/src/ProcessSearchFn/index.test.js"
+                "QueueSearchFn/index.test.js", 
+                "ProcessSearchFn/index.test.js"
             ],
             "cwd": "${workspaceRoot}/src", 
             "internalConsoleOptions": "openOnSessionStart"
