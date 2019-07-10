@@ -32,7 +32,7 @@ module.exports = async function (context, req) {
     var oneWay = req.query.oneWay || false;
     var cabin = req.query.cabin || "business";
     var start = req.query.start || "2020-01-01";
-    var end = req.query.end || "2020-07-01";
+    var end = req.query.end || "2020-02-01";
     var quantity = req.query.quantity || 2;
 
     const statusStr = "Searching for " + fromCity + " to " + toCity + " from " + start + " to " + end + " for " + quantity + " person(s)";
