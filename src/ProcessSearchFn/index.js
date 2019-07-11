@@ -14,7 +14,7 @@ module.exports = async function(context, mySbMsg) {
     };
 
     try {
-        await cliSearch.doSearch(mySbMsg, false, customLogger);
+        return await cliSearch.searchWebsiteForAwards(mySbMsg, false, customLogger);
     } catch (err) {
         context.log('ERROR', err);
         throw err;

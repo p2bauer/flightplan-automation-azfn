@@ -16,9 +16,9 @@ test('rename me!', async () => {
         reverse: false
     };
 
-    await processSearchFn(context, request);
+    let result = await processSearchFn(context, request);
 
     //expect(context.log.mock.calls.length).toBe(1);
     //expect(context.res.body).toEqual('Searching for nrt to hnl');
-    expect(true);
+    expect(result).toBe(true);
 });
