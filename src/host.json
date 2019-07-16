@@ -14,12 +14,5 @@
                 "maxAutoRenewDuration": "00:55:00"
             }
         }
-    }, 
-    "singleton": {
-        "lockPeriod": "00:00:15",
-        "listenerLockPeriod": "00:01:00",
-        "listenerLockRecoveryPollingInterval": "00:01:00",
-        "lockAcquisitionTimeout": "00:10:00",
-        "lockAcquisitionPollingInterval": "00:00:03"
     }
 }
