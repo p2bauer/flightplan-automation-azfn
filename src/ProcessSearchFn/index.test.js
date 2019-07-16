@@ -6,12 +6,12 @@ test('rename me!', async () => {
     var request = {
         website: 'AC', 
         partners: true, 
-        from: 'nrt', 
-        to: 'hnl', 
+        from: 'fra', 
+        to: 'akl', 
         oneway: false, 
         cabin: 'business', 
         start: '2020-01-01', 
-        end: '2020-01-02', 
+        end: '2020-01-11', 
         quantity: 2, 
         reverse: false
     };
@@ -21,4 +21,4 @@ test('rename me!', async () => {
     //expect(context.log.mock.calls.length).toBe(1);
     //expect(context.res.body).toEqual('Searching for nrt to hnl');
     expect(result).toBe(true);
-});
+}, 60000);
