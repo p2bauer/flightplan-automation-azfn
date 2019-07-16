@@ -8,6 +8,11 @@ module.exports = async function(context, mySbMsg) {
     mySbMsg.docker = true;
     mySbMsg.remotechrome = process.env.REMOTECHROME;
     mySbMsg.credentials = process.env.ACCOUNTS;
+    if (process.env.INCOGNITO === "true" || process.env.INCOGNITO === "TRUE") {
+        mySbMsg.incognito = true;
+    } else {
+        mySbMsg.incognito = false;
+    }
 
     const customLogger = (str) => {
         // this ends up going to the console as well, assuming the mock of context.log logs to console!
