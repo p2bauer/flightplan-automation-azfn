@@ -10,6 +10,7 @@ module.exports = async function(context, mySbMsg) {
     mySbMsg.credentials = process.env.ACCOUNTS;
 
     const customLogger = (str) => {
+        // this ends up going to the console as well, assuming the mock of context.log logs to console!
         context.log(str);
     };
 

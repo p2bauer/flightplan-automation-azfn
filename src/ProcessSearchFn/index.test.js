@@ -1,17 +1,17 @@
 const processSearchFn = require('./index');
 const context = require('../testing/defaultContext');
 
-test('rename me!', async () => {
+test('Sample Search: AC, BRU to AKL, Business, One Way, 2 people', async () => {
 
     var request = {
         website: 'AC', 
         partners: true, 
-        from: 'fra', 
+        from: 'bru', 
         to: 'akl', 
-        oneway: false, 
+        oneway: true, 
         cabin: 'business', 
         start: '2020-01-01', 
-        end: '2020-01-11', 
+        end: '2020-01-15', 
         quantity: 2, 
         reverse: false
     };
@@ -21,4 +21,4 @@ test('rename me!', async () => {
     //expect(context.log.mock.calls.length).toBe(1);
     //expect(context.res.body).toEqual('Searching for nrt to hnl');
     expect(result).toBe(true);
-}, 60000);
+}, 600000);

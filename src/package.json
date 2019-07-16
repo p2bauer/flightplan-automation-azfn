@@ -11,8 +11,5 @@
     "babel-polyfill": "^6.26.0",
     "jest": "^24.8.0"
   },
-  "author": "", 
-  "jest": {
-    "verbose": true
-  }
+  "author": ""
 }

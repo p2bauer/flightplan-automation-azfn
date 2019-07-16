@@ -1,4 +1,8 @@
+function jestLogger(str) {
+    console.log(str);
+}
+
 module.exports = {
-    log: jest.fn(), 
+    log: jestLogger, 
     bindings: {}
 };
