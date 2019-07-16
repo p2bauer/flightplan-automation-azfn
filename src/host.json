@@ -4,16 +4,24 @@
         "id": "Microsoft.Azure.Functions.ExtensionBundle",
         "version": "[1.*, 2.0.0)"
     }, 
+    "functionTimeout": "00:10:00",
+    "extensions": {
+        "serviceBus": {
+            "prefetchCount": 10, 
+            "maxConcurrentCalls": 1,
+            "maxAutoRenewDuration": "00:10:00", 
+            "messageHandlerOptions": {
+                "autoComplete": false,
+                "maxConcurrentCalls": 1,
+                "maxAutoRenewDuration": "00:55:00"
+            }
+        }
+    }, 
     "singleton": {
         "lockPeriod": "00:00:15",
         "listenerLockPeriod": "00:01:00",
         "listenerLockRecoveryPollingInterval": "00:01:00",
         "lockAcquisitionTimeout": "00:10:00",
         "lockAcquisitionPollingInterval": "00:00:03"
-    }, 
-    "serviceBus": {
-        "maxConcurrentCalls": 1,
-        "prefetchCount": 10,
-        "maxAutoRenewDuration": "00:10:00"
     }
 }
